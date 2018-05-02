@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class HelloController {
@@ -116,6 +117,25 @@ public class HelloController {
             result = result.concat("" + resultSet.getString(0) + " " + resultSet.getString(1) + "\n");
         }
         return result;
+    }
+
+    @RequestMapping(value = "/addDoor", method = RequestMethod.POST)
+    public String addDoor(@RequestBody String doorName){
+        List<Mutation> mutations = new ArrayList<>();
+        mutations.add(
+                Mutation.newInsertBuilder("Doors")
+                        .set("door_id")
+                        .to(UUID.randomUUID().toString())
+                        .set("name")
+                        .to(doorName)
+                        .build());
+
+        try{
+            databaseClient.write(mutations);
+            return "Door Added to the DB";
+        } catch(Exception ex){
+            return "There was an error and the album was not added to the DB. The error is: " + ex.getMessage();
+        }
     }
 
     /**
