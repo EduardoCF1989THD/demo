@@ -40,7 +40,7 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index() {
-//        writeExampleData(databaseClient);
+        //        writeExampleData(databaseClient);
        // query(databaseClient);
        // read(databaseClient);
         return "Greetings from Spring Boot!";
@@ -58,11 +58,11 @@ public class HelloController {
         while (resultSet.next()) {
             System.out.printf(
                     "%d %d %s\n", resultSet.getLong(0), resultSet.getLong(1), resultSet.getString(2));
-            result = result.concat( "" + resultSet.getLong(0) + " " + resultSet.getLong(1) + " " + resultSet.getString(2) + "\n");
+            result = result.concat("" + resultSet.getLong(0) + " " + resultSet.getLong(1) + " " + resultSet.getString(2) + "\n");
         }
         return result;
+    }
 
-    }//@RequestParam("singerId") int singerid, @RequestParam("albumId") int albumId, @RequestParam("albumTitle") String albumTitle) {
 
     @RequestMapping("/queryAlbums")
     public String query(@RequestParam("singerId") long singerid, @RequestParam("albumId") long albumId) {
@@ -100,6 +100,22 @@ public class HelloController {
             return "There was an error and the album was not added to the DB. The error is: " + ex.getMessage();
         }
 
+    }
+
+    @RequestMapping("/getAllDoors")
+    public String getAllDoors() {
+        ResultSet resultSet =
+                databaseClient
+                        .singleUse()
+                        .read("Doors",
+                                KeySet.all(),
+                                Arrays.asList("door_id", "name"));
+        String result = "";
+        while (resultSet.next()) {
+            System.out.printf( "%s %s\n", resultSet.getString(0), resultSet.getString(1));
+            result = result.concat("" + resultSet.getString(0) + " " + resultSet.getString(1) + "\n");
+        }
+        return result;
     }
 
     /**
