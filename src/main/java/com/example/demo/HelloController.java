@@ -37,6 +37,7 @@ public class HelloController {
                     new Album(2, 3, "Terrified"));
 
 
+
     @RequestMapping("/")
     public String index() {
 //        writeExampleData(databaseClient);
@@ -63,18 +64,20 @@ public class HelloController {
 
     }//@RequestParam("singerId") int singerid, @RequestParam("albumId") int albumId, @RequestParam("albumTitle") String albumTitle) {
 
-
     @RequestMapping("/queryAlbums")
-    public void query(DatabaseClient dbClient) {
+    public String query(@RequestParam("singerId") long singerid, @RequestParam("albumId") long albumId) {
         // singleUse() can be used to execute a single read or query against Cloud Spanner.
         ResultSet resultSet =
-                dbClient
+                databaseClient
                         .singleUse()
-                        .executeQuery(Statement.of("SELECT SingerId, AlbumId, AlbumTitle FROM Albums"));
+                        .executeQuery(Statement.of("SELECT SingerId, AlbumId, AlbumTitle FROM Albums WHERE SingerId=" + singerid + " AND AlbumId=" + albumId));
+        String result = "";
         while (resultSet.next()) {
             System.out.printf(
                     "%d %d %s\n", resultSet.getLong(0), resultSet.getLong(1), resultSet.getString(2));
+            result = result.concat( "" + resultSet.getLong(0) + " " + resultSet.getLong(1) + " " + resultSet.getString(2) + "\n");
         }
+        return result;
     }
 
     @RequestMapping(value = "/writeAlbum", method = RequestMethod.POST)
