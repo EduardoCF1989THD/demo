@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: application-with-secrets
 spec:
-  replicas: 4
+  replicas: 1
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
             secretName: spanner-creds
       containers:
         - name: application-with-secrets
-          image: gcr.io/helical-sled-202720/application-with-secrets:v3
+          image: gcr.io/helical-sled-202720/application-with-secrets:v4
           imagePullPolicy: Always
           env:
             - name: GOOGLE_APPLICATION_CREDENTIALS
@@ -45,4 +45,4 @@ spec:
   - 98.6.11.8/29
 
 
-## this file was created on Wed May  2 16:06:12 EDT 2018.  Image:Tag = application-with-secrets:v3
+## this file was created on Thu May  3 12:26:03 EDT 2018.  Image:Tag = application-with-secrets:v4

@@ -1,17 +1,16 @@
 package com.example.demo;
 
 import com.example.demo.dto.Album;
+import com.example.demo.dto.Door;
 import com.example.demo.dto.Singer;
 import com.google.cloud.spanner.*;
 import com.google.spanner.admin.database.v1.CreateDatabaseMetadata;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
+@CrossOrigin
 public class HelloController {
 
     //Variables
@@ -103,19 +102,21 @@ public class HelloController {
 
     }
 
+
     @RequestMapping("/getAllDoors")
-    public String getAllDoors() {
+    public List<Door> getAllDoors() {
         ResultSet resultSet =
                 databaseClient
                         .singleUse()
                         .read("Doors",
                                 KeySet.all(),
                                 Arrays.asList("door_id", "name"));
-        String result = "";
+        List<Door> result = new ArrayList<>();
         while (resultSet.next()) {
             System.out.printf( "%s %s\n", resultSet.getString(0), resultSet.getString(1));
-            result = result.concat("" + resultSet.getString(0) + " " + resultSet.getString(1) + "\n");
+            result.add(new Door(resultSet.getString(0),resultSet.getString(1)));
         }
+
         return result;
     }
 
