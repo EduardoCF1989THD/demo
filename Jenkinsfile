@@ -4,7 +4,7 @@ pipeline {
         stage('Unit Tests') {
             agent {
                 docker {
-                    image 'mhart/alpine-node'
+                    image 'openjdk:8-jdk-alpine'
                 }
             }
             steps {
