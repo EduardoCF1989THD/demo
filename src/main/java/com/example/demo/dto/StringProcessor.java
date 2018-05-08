@@ -1,7 +1,9 @@
 package com.example.demo.dto;
 
+import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
 
+@Component
 public class StringProcessor {
 
     public boolean isPalyndrome(String word){
