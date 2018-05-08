@@ -8,7 +8,7 @@ pipeline {
                 }
             }
             steps {
-                sh './gradlew test --debug'
+                sh './gradlew test --debug --stacktrace'
 
             }
         }
