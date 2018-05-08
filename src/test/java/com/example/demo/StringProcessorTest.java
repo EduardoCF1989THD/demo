@@ -11,13 +11,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.logging.Logger;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 //@ImportResource({"classpath*:applicationContext.xml"})
 public class StringProcessorTest {
 
-    @Autowired
-    StringProcessor stringProcessor;
+//    @Autowired
+    StringProcessor stringProcessor = new StringProcessor();
     Logger logger = Logger.getLogger(StringProcessorTest.class.getName());
 
     @Test
