@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ImportResource({"classpath*:applicationContext.xml"})
+//@ImportResource({"classpath*:applicationContext.xml"})
 public class StringProcessorTest {
 
     @Autowired
